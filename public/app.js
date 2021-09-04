@@ -1,24 +1,19 @@
 var budgetController = (function() {
-    var x = 23;
-    var add = function(a) {
-        return x + a;
-    }
-    return {
-        publicTest: function(b) {
-            return add(b);
-        }
-    }
+
 })();
 
 var UIController = (function() {
-    //Sone code
+
 })();
 
 var controller = (function(budgetCtrl, UICtrl) {
-    var z = budgetCtrl.publicTest(5);
-    return {
-        anotherPublic: function() {
-            console.log(z);
-        }
+    var ctrlAddItem = function() {
+
     }
+    document.querySelector('.add-btn').addEventListener('click', ctrlAddItem);
+    document.addEventListener('keypress', (e) => {
+        if (e.keyCode === 13 || e.which === 13) {
+            ctrlAddItem();
+        }
+    });
 })(budgetController, UIController);

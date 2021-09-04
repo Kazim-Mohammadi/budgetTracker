@@ -172,7 +172,7 @@ body {
     width: 100px;
 }
 
-.add__btn {
+.add-btn {
     font-size: 35px;
     background: none;
     border: none;
@@ -184,7 +184,7 @@ body {
     margin-left: 10px;
 }
 
-.add__btn:active {
+.add-btn:active {
     transform: translateY(2px);
 }
 
@@ -195,7 +195,7 @@ body {
     border: 1px solid var(--income-color);
 }
 
-.add__btn:focus {
+.add-btn:focus {
     outline: none;
 }
 

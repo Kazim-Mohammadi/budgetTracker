@@ -18,6 +18,26 @@ var budgetController = (function() {
             inc: 0,
             exp: 0
         }
+    };
+    return {
+        addItem: function(type, desc, val) {
+            var newItem, id;
+            // create new id
+            if (data.allItems[type].length > 0) {
+                id = data.allItems[type][data.allItems[type].length - 1].id + 1;
+            } else {
+                id = 0;
+            }
+            // create new item
+            if (type === 'inc') {
+                newItem = new Income(id, desc, val);
+            } else {
+                newItem = new Expense(id, desc, val);
+            }
+            // push new item into our data structure
+            data.allItems[type].push(newItem);
+            return newItem;
+        }
     }
 })();
 
@@ -26,7 +46,9 @@ var UIController = (function() {
         inputType: '.add__type',
         inputDescription: '.add__description',
         inputValue: '.add__value',
-        inputBtn: '.add__btn'
+        inputBtn: '.add__btn',
+        incomeContainer: 'income__list',
+        expensesContainer: 'expenses__list'
     }
     return {
         getInput: function() {
@@ -35,6 +57,23 @@ var UIController = (function() {
                 description: document.querySelector(DOMstrings.inputDescription).value,
                 value: document.querySelector(DOMstrings.inputValue).value
             }
+        },
+        addListItem: function(obj, type) {
+            var html, newHtml, element;
+            // Create HTML string with placeholder text
+            if (type === 'inc') {
+                element = DOMstrings.incomeContainer;
+                html = '<div class="item clearfix" id="income-%id%"><div class = "item__description" >%description%< /div> <div class = "right clearfix" > <div class = "item__value" >%value%< /div> <div class = "item__delete" > <button class = "item__delete--btn" >D</button > </div> < /div > < /div > ';
+            } else {
+                element = DOMstrings.expensesContainer;
+                html = ' <div class="item clearfix" id="expense-%id%"> <div class = "item__description" >%description%< /div> <div class = "right clearfix" > <div class = "item__value" >%value%< /div> <div class = "item__percentage" > 21 % < /div> <div class = "item__delete" > <button class = "item__delete--btn" >D</button > </div > </ div > </div > ';
+            }
+            // Replace the placeholder with actual data
+            newHtml = html.replace('%id%', obj.id);
+            newHtml = newHtml.replace('%description%', obj.description);
+            newHtml = newHtml.replace('%value%', obj.value);
+            // Insert the HTML into the DOM
+            document.querySelector(element).insertAdjacentElement('beforeend', newHtml);
         },
         getDOMstrings: function() {
             return DOMstrings;
@@ -53,8 +92,13 @@ var controller = (function(budgetCtrl, UICtrl) {
         });
     };
     var ctrlAddItem = function() {
-        var input = UICtrl.getInput();
-        console.log(input);
+        var input, newItem;
+        // get the field input data
+        input = UICtrl.getInput();
+        // add the item to the budget controller
+        newItem = budgetController.addItem(input.type, input.description, input.value);
+        // add the item to the UI
+        UICtrl.addListItem(newItem, input.type);
     };
     return {
         init: function() {

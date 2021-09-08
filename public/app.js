@@ -47,6 +47,18 @@ var budgetController = (function() {
             data.allItems[type].push(newItem);
             return newItem;
         },
+
+        deleteItem: function(type, id) {
+            var ids, index;
+            ids = data.allItems[type].map(function(current) {
+                return current.id;
+            });
+            index = ids.indexOf(id);
+            if (index !== -1) {
+                data.allItems[type].splice(index, 1);
+            }
+        },
+
         calculateBudget: function() {
             calculateTotal('exp');
             calculateTotal('inc');
@@ -81,6 +93,7 @@ var UIController = (function() {
         incomeLabel: '.budget__income--value',
         expenseLabel: '.budget__expenses--value',
         percentageLabel: '.budget__expenses--percentage',
+        container: '.container',
     }
     return {
         getInput: function() {
@@ -106,6 +119,11 @@ var UIController = (function() {
             newHtml = newHtml.replace('%value%', obj.value);
             // Insert the HTML into the DOM
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+        },
+        deleteListItem: function(selectorId) {
+            var el = document.getElementById(selectorId);
+            el.parentNode.removeChild(el);
+
         },
         clearFields: function() {
             var fields, fieldsArr;
@@ -141,6 +159,7 @@ var controller = (function(budgetCtrl, UICtrl) {
                 ctrlAddItem();
             }
         });
+        document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
     };
     var updateBudget = function() {
         // calculate the budget
@@ -162,6 +181,21 @@ var controller = (function(budgetCtrl, UICtrl) {
             // clear fields
             UICtrl.clearFields();
             // calculate and update the budget
+            updateBudget();
+        }
+    };
+    var ctrlDeleteItem = function(event) {
+        var itemId, splitId, type, id;
+        itemId = event.target.parentNode.parentNode.parentNode.parentNode.id;
+        if (itemId) {
+            splitId = itemId.split('-');
+            type = splitId[0];
+            id = parseInt(splitId[1]);
+            // Delete the item form data structure
+            budgetCtrl.deleteItem(type, id);
+            // Delete the item the UI
+            UICtrl.deleteListItem(itemId);
+            // update and show the budget 
             updateBudget();
         }
     };

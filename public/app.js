@@ -85,10 +85,10 @@ var budgetController = (() => {
 
         },
         getPercentages: () => {
-            var allPerc = data.allItems.exp.map((current) => {
+            var allPercentage = data.allItems.exp.map((current) => {
                 return current.getPercentage();
             });
-            return allPerc;
+            return allPercentage;
         },
         getBudget: () => {
             return {

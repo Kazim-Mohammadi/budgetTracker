@@ -124,8 +124,10 @@ var UIController = (function() {
         num = Math.abs(num).toFixed(2);
         splitNum = num.split(".");
         int = splitNum[0];
+        var from = [];
+
         if (int.length > 3) {
-            int = int.substr(0, int.length - 3) + "," + int.substr(int.length - 3, 3);
+            int = int.substr(0, int.length - 3) + ',' + int.substr(int.length - 3, 3) + ',' + int.substr(3, 3) + ',' + int.substr(6, 3) + ',' + int.substr(9, 3) + ',' + int.substr(12, 3);
         }
         dec = splitNum[1];
         return (type === "exp" ? "-" : "+") + " " + int + "." + dec;
@@ -149,11 +151,11 @@ var UIController = (function() {
             if (type === "inc") {
                 element = DOMstrings.incomeContainer;
                 html =
-                    '<div class="item clearfix" id="inc-%id%"> <div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i>D</i></button></div></div></div>';
+                    '<div class="item clearfix" id="inc-%id%"> <div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i>&times;</i></button></div></div></div>';
             } else if (type === "exp") {
                 element = DOMstrings.expensesContainer;
                 html =
-                    '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i>D</i></button></div></div></div>';
+                    '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i>&times</i></button></div></div></div>';
             }
             // Replace the placeholder with actual data
             newHtml = html.replace("%id%", obj.id);

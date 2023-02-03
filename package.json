@@ -1,0 +1,31 @@
+{
+  "name": "budgettracker",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "This is a budget tracker implemented with vanilla javascript, CSS3 and HTML5. This project covers advanced topics of javascript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kazim-kayhan/budgetTracker.git"
+  },
+  "keywords": [
+    "javascript",
+    "badget",
+    "tracker"
+  ],
+  "author": "Kazim Kayhan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kazim-kayhan/budgetTracker/issues"
+  },
+  "homepage": "https://github.com/kazim-kayhan/budgetTracker#readme",
+  "dependencies": {
+    "jsonfile": "^6.1.0",
+    "moment": "^2.29.4",
+    "random": "^4.1.0",
+    "simple-git": "^3.16.0"
+  }
+}
